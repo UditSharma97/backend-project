@@ -3,8 +3,20 @@ import mongoose from "mongoose";
 import {DB_NAME} from "./constants.js";
 import connectDB from "./db/index.js";
 
-console.log(process.env.MONGODB_URI);
-connectDB();
+
+connectDB()
+.then(() => {
+    app.on("error", (error) => {
+        console.error("ERR: ", error);
+        throw error;
+    });
+    app.listen(process.env.PORT || 5000, () => {
+        console.log(`🐌 Server is listening ${process.env.PORT}`)});
+})
+.catch((error) => {
+    console.error("ERROR: ", error);
+})
+
 
 
 
